@@ -75,6 +75,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entities\ESetDateResult.cs" />
+    <Compile Include="Entities\Possibility.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="View.xaml">
       <Generator>MSBuild:Compile</Generator>

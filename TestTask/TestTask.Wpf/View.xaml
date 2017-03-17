@@ -4,9 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestTask.Wpf"
+        xmlns:vm="clr-namespace:TestTask.Wpf.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="248.684" Width="738.158">
+    <Window.DataContext>
+        <vm:ViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <DataGrid ItemsSource="{Binding MeteringRecords}" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}" AutoGenerateColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="168" Width="374">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер" Binding="{Binding Number, StringFormat=D6}"></DataGridTextColumn>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=d}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Calendar SelectedDate="{Binding SelectedDate}" HorizontalAlignment="Left" Margin="389,10,0,0" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding PossibilitysCity}" SelectedItem="{Binding SelectedCity}" x:Name="comboBox" HorizontalAlignment="Left" Margin="573,10,0,0" VerticalAlignment="Top" Width="147"/>
+        <ListView ItemsSource="{Binding SelectedPossibilitys}" SelectedItem="{Binding SelectedPossibility}" x:Name="listView" HorizontalAlignment="Left" Height="146" Margin="573,32,0,0" VerticalAlignment="Top" Width="147">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Date, StringFormat=d}"/>
+                    <GridViewColumn Header="Лимит" DisplayMemberBinding="{Binding Limit}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Command="{Binding SaveCommand}" x:Name="button" Content="Сохранить" HorizontalAlignment="Left" Margin="645,183,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label x:Name="label" Content="{Binding InfoMessage}" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

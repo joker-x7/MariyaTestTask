@@ -9,7 +9,10 @@ namespace TestTask.Wpf.Models
 {
     public interface IModel
     {
-        ICollection<MeteringRecord> GetAll();
+        ICollection<MeteringRecord> GetAllRecords();
         ICollection<MeteringRecord> GetWithoutDate();
+        ESetDateResult SetDate(int? number, DateTime? date, string city);
+        ICollection<Possibility> GetAllPossibilitys();
+        ICollection<Possibility> GetByCity(string city);
     }
 }

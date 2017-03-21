@@ -69,15 +69,17 @@ namespace TestTask.Tests
             var notFoundRecordResult = model.SetDate(100, DateTime.Now.AddDays(1), "Саратов");
             var notFoundPossibilitysResult = model.SetDate(1, DateTime.Now.AddDays(100), "Саратов");
             model.SetDate(1, DateTime.Now.AddDays(1), "Саратов");
-            model.SetDate(1, DateTime.Now.AddDays(1), "Саратов");
-            model.SetDate(1, DateTime.Now.AddDays(1), "Саратов");
-            var limitIsOverResult = model.SetDate(1, DateTime.Now.AddDays(1), "Саратов");
+            model.SetDate(2, DateTime.Now.AddDays(1), "Саратов");
+            model.SetDate(3, DateTime.Now.AddDays(1), "Саратов");
+            var limitIsOverResult = model.SetDate(4, DateTime.Now.AddDays(1), "Саратов");
+            var recordHasDateResult = model.SetDate(1, DateTime.Now.AddDays(1), "Саратов");
 
             Assert.AreEqual(ESetDateResult.NumberIsNull, numberIsNullResult);
             Assert.AreEqual(ESetDateResult.DateIsNull, dateIsNullResult);
             Assert.AreEqual(ESetDateResult.NotFoundRecord, notFoundRecordResult);
             Assert.AreEqual(ESetDateResult.NotFoundPossibility, notFoundPossibilitysResult);
             Assert.AreEqual(ESetDateResult.LimitIsOver, limitIsOverResult);
+            Assert.AreEqual(ESetDateResult.RecordHasDate, recordHasDateResult);
         }
 
         [TestMethod]

@@ -14,5 +14,6 @@ namespace TestTask.Wpf.Entities
         NotFoundRecord,
         NotFoundPossibility,
         LimitIsOver,
+        RecordHasDate,
     }
 }

@@ -81,15 +81,7 @@ namespace TestTask.Wpf.ViewModels
             set
             {
                 selectedCity = value;
-                //TODO Заменить это убожество!!!
                 LoadSelectedPossibilitys();
-                //var res = model.GetByCity(selectedCity);
-                //SelectedPossibilitys.Clear();
-                //foreach(var item in res)
-                //{
-                //    SelectedPossibilitys.Add(item);
-                //}
-                //SelectedPossibilitys = new ObservableCollection<Possibility>(model.GetByCity(selectedCity));
             }
         }
         public string InfoMessage
@@ -129,7 +121,7 @@ namespace TestTask.Wpf.ViewModels
                 case ESetDateResult.Ok:
                     InfoMessage = "Запись произведена";
                     LoadSelectedPossibilitys();
-                    LoadSelectedRecords();
+                    LoadRecordsWithoutDate();
                     break;
                 case ESetDateResult.DateIsNull:
                     InfoMessage = "Выберите дату";
@@ -146,6 +138,9 @@ namespace TestTask.Wpf.ViewModels
                 case ESetDateResult.LimitIsOver:
                     InfoMessage = string.Format("В городе {0} на {1} лимит исчерпан", SelectedCity, SelectedDate.Value.Date.ToShortDateString());
                     break;
+                case ESetDateResult.RecordHasDate:
+                    InfoMessage = "Выбранной записи уже назвачена дата";
+                    break;
                 default:
                     break;
             }
@@ -153,31 +148,34 @@ namespace TestTask.Wpf.ViewModels
 
         private void LoadSelectedPossibilitys()
         {
-            var res = model.GetByCity(selectedCity);
-            SelectedPossibilitys.Clear();
-            foreach (var item in res)
-            {
-                SelectedPossibilitys.Add(item);
-            }
+            ToObservableCollection(model.GetByCity(selectedCity));
         }
 
         private void LoadSelectedRecords()
         {
-            var res = model.GetAllRecords();
+            ToObservableCollection(model.GetAllRecords());
+        }
+
+        private void LoadRecordsWithoutDate()
+        {
+            ToObservableCollection(model.GetWithoutDate());
+        }
+
+        private void ToObservableCollection(ICollection<MeteringRecord> records)
+        {
             MeteringRecords.Clear();
-            foreach (var item in res)
+            foreach (var item in records)
             {
                 MeteringRecords.Add(item);
             }
         }
 
-        private void LoadRecordsWithoutDate()
+        private void ToObservableCollection(ICollection<Possibility> possibilityes)
         {
-            var res = model.GetWithoutDate();
-            MeteringRecords.Clear();
-            foreach (var item in res)
+            SelectedPossibilitys.Clear();
+            foreach (var item in possibilityes)
             {
-                MeteringRecords.Add(item);
+                SelectedPossibilitys.Add(item);
             }
         }
     }

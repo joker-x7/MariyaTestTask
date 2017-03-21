@@ -73,6 +73,11 @@ namespace TestTask.Wpf.Models
                 return ESetDateResult.NotFoundRecord;
             }
 
+            if(record.Date.HasValue)
+            {
+                return ESetDateResult.RecordHasDate;
+            }
+
             var possibility = possibilitys.FirstOrDefault(x => x.City == city && x.Date.Date == date.Value.Date);
 
             if(possibility == null)

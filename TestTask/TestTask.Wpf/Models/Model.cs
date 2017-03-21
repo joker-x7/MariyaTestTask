@@ -39,6 +39,12 @@ namespace TestTask.Wpf.Models
             }
         }
 
+        public Model(ICollection<MeteringRecord> records, ICollection<Possibility> possibilitys)
+        {
+            this.records = records;
+            this.possibilitys = possibilitys;
+        }
+
         public ICollection<MeteringRecord> GetAllRecords()
         {
             return records.ToList();
@@ -92,6 +98,11 @@ namespace TestTask.Wpf.Models
         public ICollection<Possibility> GetByCity(string city)
         {
             return possibilitys.Where(x => x.City == city).ToList();
+        }
+
+        public ICollection<MeteringRecord> GetByUserPartName(string partName)
+        {
+            return records.Where(x => x.FullName.Contains(partName)).ToList();
         }
     }
 }

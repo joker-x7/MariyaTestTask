@@ -20,12 +20,30 @@ namespace TestTask.Wpf.ViewModels
         private DateTime? selectedDate;
         private Possibility selectedPossibility;
         private string infoMessage;
+        private string userNameText;
 
         public ObservableCollection<MeteringRecord> MeteringRecords { get; set; }
         public ICollection<Possibility> Possibilitys { get; set; }
         public ICollection<string> PossibilitysCity { get; set; }
         public ObservableCollection<Possibility> SelectedPossibilitys { get; set; }
         public MeteringRecord SelectedRecord { get; set; }
+        public string UserNameText
+        {
+            get
+            {
+                return userNameText;
+            }
+            set
+            {
+                userNameText = value;
+                var res = model.GetByUserPartName(userNameText);
+                MeteringRecords.Clear();
+                foreach (var item in res)
+                {
+                    MeteringRecords.Add(item);
+                }
+            }
+        }
         public DateTime? SelectedDate
         {
             get
@@ -88,6 +106,8 @@ namespace TestTask.Wpf.ViewModels
         }
 
         public ICommand SaveCommand { get; private set; }
+        public ICommand LoadWithoutDateCommand { get; private set; }
+        public ICommand LoadAllRecordsCommand { get; private set; }
 
         public ViewModel()
         {
@@ -97,6 +117,8 @@ namespace TestTask.Wpf.ViewModels
             PossibilitysCity = Possibilitys.Select(x => x.City).Distinct().ToList();
             SelectedPossibilitys = new ObservableCollection<Possibility>();
             SaveCommand = new RelayCommand(Save);
+            LoadWithoutDateCommand = new RelayCommand(LoadRecordsWithoutDate);
+            LoadAllRecordsCommand = new RelayCommand(LoadSelectedRecords);
         }
 
         private void Save()
@@ -119,10 +141,10 @@ namespace TestTask.Wpf.ViewModels
                     InfoMessage = "Запись с таким номером не найдена";
                     break;
                 case ESetDateResult.NotFoundPossibility:
-                    InfoMessage = string.Format("В городе {0} на {1} запись не производится", SelectedCity, SelectedDate.Value.Date);
+                    InfoMessage = string.Format("В городе {0} на {1} запись не производится", SelectedCity, SelectedDate.Value.Date.ToShortDateString());
                     break;
                 case ESetDateResult.LimitIsOver:
-                    InfoMessage = string.Format("В городе {0} на {1} лимит исчерпан", SelectedCity, SelectedDate.Value.Date);
+                    InfoMessage = string.Format("В городе {0} на {1} лимит исчерпан", SelectedCity, SelectedDate.Value.Date.ToShortDateString());
                     break;
                 default:
                     break;
@@ -142,6 +164,16 @@ namespace TestTask.Wpf.ViewModels
         private void LoadSelectedRecords()
         {
             var res = model.GetAllRecords();
+            MeteringRecords.Clear();
+            foreach (var item in res)
+            {
+                MeteringRecords.Add(item);
+            }
+        }
+
+        private void LoadRecordsWithoutDate()
+        {
+            var res = model.GetWithoutDate();
             MeteringRecords.Clear();
             foreach (var item in res)
             {

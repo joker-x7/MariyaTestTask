@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TestTask.Wpf"
         xmlns:vm="clr-namespace:TestTask.Wpf.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="248.684" Width="738.158">
+        Title="MainWindow" Height="280.47" Width="738.158">
     <Window.DataContext>
         <vm:ViewModel/>
     </Window.DataContext>
@@ -29,6 +29,9 @@
             </ListView.View>
         </ListView>
         <Button Command="{Binding SaveCommand}" x:Name="button" Content="Сохранить" HorizontalAlignment="Left" Margin="645,183,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label x:Name="label" Content="{Binding InfoMessage}" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="{Binding InfoMessage}" HorizontalAlignment="Left" Margin="10,208,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding LoadWithoutDateCommand}" x:Name="button1" Content="Незаписанные" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="93"/>
+        <Button Command="{Binding LoadAllRecordsCommand}" x:Name="button2" Content="Все" HorizontalAlignment="Left" Margin="108,183,0,0" VerticalAlignment="Top" Width="44"/>
+        <TextBox Text="{Binding UserNameText, UpdateSourceTrigger=PropertyChanged}" x:Name="textBox" HorizontalAlignment="Left" Height="20" Margin="157,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>

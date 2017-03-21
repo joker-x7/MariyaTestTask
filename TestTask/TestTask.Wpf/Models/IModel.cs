@@ -14,5 +14,6 @@ namespace TestTask.Wpf.Models
         ESetDateResult SetDate(int? number, DateTime? date, string city);
         ICollection<Possibility> GetAllPossibilitys();
         ICollection<Possibility> GetByCity(string city);
+        ICollection<MeteringRecord> GetByUserPartName(string partName);
     }
 }
